@@ -42,4 +42,16 @@ public class CommonHelper {
     public static ResponseDTO buildResponse(String currentTimestamp, IResponseData responseData) {
         return new ResponseDTO(currentTimestamp, responseData);
     }
+
+    /**
+     * Converts an environment variable name to a property name by replacing
+     * underscores (_) with periods (.).
+     * 
+     * @param environmentVariableName The name of the environment variable.
+     * @return The property name derived from the environment variable name.
+     */
+    public static String convertEnvironmentVariableNameToPropertyName(String environmentVariableName) {
+        // replace underscores with periods and return
+        return environmentVariableName.replace('_', '.');
+    }
 }

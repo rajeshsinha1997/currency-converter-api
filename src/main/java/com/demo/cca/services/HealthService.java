@@ -7,11 +7,11 @@ import java.util.ArrayList;
 
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.demo.cca.dto.response.HealthResponseDTO;
 import com.demo.cca.enums.ApplicationStatus;
+import com.demo.cca.helpers.EnvironmentHelper;
 
 /**
  * Service class responsible for retrieving application health data.
@@ -20,19 +20,14 @@ import com.demo.cca.enums.ApplicationStatus;
  */
 @Service
 public class HealthService {
-    private Environment environment;
     private Instant startTime;
 
     private final Clock clock;
 
     /**
      * Constructor for the HealthService class.
-     * 
-     * @param environment The environment object providing access to application
-     *                    properties and profiles.
      */
-    public HealthService(Environment environment) {
-        this.environment = environment;
+    public HealthService() {
         this.clock = Clock.systemDefaultZone();
     }
 
@@ -79,15 +74,17 @@ public class HealthService {
      */
     public HealthResponseDTO getApplicationHealthData() {
         // retrieve application name
-        String applicationName = this.environment.getProperty("spring.application.name");
-        String applicationVersion = this.environment.getProperty("spring.application.version");
+        String applicationName = EnvironmentHelper
+                .resolveEnvironmentVariableOrPropertyValue("SPRING_APPLICATION_NAME");
+
+        // retrieve application version
+        String applicationVersion = EnvironmentHelper
+                .resolveEnvironmentVariableOrPropertyValue("SPRING_APPLICATION_VERSION");
 
         // return HealthResponseDTO containing the application health status
         return new HealthResponseDTO(
-                applicationName != null && !applicationName.isBlank() ? applicationName.trim()
-                        : "currency-converter-api",
-                applicationVersion != null && !applicationVersion.isBlank() ? applicationVersion.trim()
-                        : "0.0.1-SNAPSHOT",
+                applicationName,
+                applicationVersion,
                 this.getApplicationUptime(),
                 ApplicationStatus.UP,
                 new ArrayList<>());
