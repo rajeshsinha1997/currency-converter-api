@@ -52,6 +52,6 @@ public class CommonHelper {
      */
     public static String convertEnvironmentVariableNameToPropertyName(String environmentVariableName) {
         // replace underscores with periods and return
-        return environmentVariableName.replace('_', '.');
+        return environmentVariableName.replace('_', '.').toLowerCase();
     }
 }
