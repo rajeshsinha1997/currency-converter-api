@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Represents a generic response DTO (Data Transfer Object) containing response
  * data and timestamp.
  */
-public class ResponseDTO {
+public class SuccessResponseDTO {
 
     @JsonProperty("response-timestamp")
     private String responseTimestamp;
@@ -16,13 +16,13 @@ public class ResponseDTO {
     private IResponseData responseData;
 
     /**
-     * Constructs a ResponseDTO object with the specified response timestamp and
-     * response data.
+     * Constructs a SuccessResponseDTO object with the specified response timestamp
+     * and response data.
      *
      * @param responseTimestamp The timestamp of the response.
      * @param responseData      The response data.
      */
-    public ResponseDTO(String responseTimestamp, IResponseData responseData) {
+    public SuccessResponseDTO(String responseTimestamp, IResponseData responseData) {
         this.responseTimestamp = responseTimestamp;
         this.responseData = responseData;
     }

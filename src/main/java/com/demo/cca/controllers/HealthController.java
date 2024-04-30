@@ -1,9 +1,11 @@
 package com.demo.cca.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.demo.cca.dto.response.ResponseDTO;
+import com.demo.cca.dto.response.SuccessResponseDTO;
+import com.demo.cca.exceptions.InvalidRequestParameterException;
 import com.demo.cca.helpers.CommonHelper;
 import com.demo.cca.services.HealthService;
 
@@ -26,13 +28,27 @@ public class HealthController {
 
     /**
      * Endpoint to retrieve the health status of the application.
-     *
+     * 
+     * @param addExternalDependencyHealth A boolean flag indicating whether health
+     *                                    information of external dependencies
+     *                                    are required (optional).
      * @return A ResponseDTO containing the current timestamp and the health status
      *         of the application.
      */
     @GetMapping("/api/health")
-    public ResponseDTO getApplicationHealth() {
-        return CommonHelper.buildResponse(CommonHelper.getCurrentTimestamp(false),
-                this.healthService.getApplicationHealthData());
+    public SuccessResponseDTO getApplicationHealth(
+            @RequestParam(name = "dependency-health", required = false) String addExternalDependencyHealth) {
+        // validate request parameter
+        if (addExternalDependencyHealth.isBlank() || (!addExternalDependencyHealth.equalsIgnoreCase("true")
+                && !addExternalDependencyHealth.equalsIgnoreCase("false"))) {
+            // throw exception
+            throw new InvalidRequestParameterException(
+                    "invalid value for request parameter [dependency-health]: "
+                            + addExternalDependencyHealth);
+        }
+
+        // call service method to get the application health information and return
+        return CommonHelper.buildSuccessResponse(CommonHelper.getCurrentTimestamp(false),
+                this.healthService.getApplicationHealthData(addExternalDependencyHealth.equalsIgnoreCase("true")));
     }
 }

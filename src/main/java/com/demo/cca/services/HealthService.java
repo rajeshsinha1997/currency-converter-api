@@ -47,7 +47,7 @@ public class HealthService {
      * 
      * @return A string representing the uptime of the application.
      */
-    private String getApplicationUptime() {
+    public String getApplicationUptime() {
         // calculate uptime duration in seconds
         long uptimeDurationInSeconds = (this.startTime == null ? Duration.ZERO
                 : Duration.between(startTime,
@@ -70,9 +70,12 @@ public class HealthService {
     /**
      * Retrieves the health data of the application.
      * 
+     * @param addExternalDependencyHealth A boolean flag indicating whether health
+     *                                    information of external services are
+     *                                    required (optional).
      * @return A HealthResponseDTO containing the health status of the application.
      */
-    public HealthResponseDTO getApplicationHealthData() {
+    public HealthResponseDTO getApplicationHealthData(boolean addExternalDependencyHealth) {
         // retrieve application name
         String applicationName = EnvironmentHelper
                 .resolveEnvironmentVariableOrPropertyValue("SPRING_APPLICATION_NAME");
@@ -81,12 +84,20 @@ public class HealthService {
         String applicationVersion = EnvironmentHelper
                 .resolveEnvironmentVariableOrPropertyValue("SPRING_APPLICATION_VERSION");
 
-        // return HealthResponseDTO containing the application health status
-        return new HealthResponseDTO(
+        // create instance of HealthResponseDTO containing the application health status
+        HealthResponseDTO applicationHealth = new HealthResponseDTO(
                 applicationName,
                 applicationVersion,
                 this.getApplicationUptime(),
                 ApplicationStatus.UP,
                 new ArrayList<>());
+
+        // check if we need to add health information of external services
+        if (addExternalDependencyHealth) {
+            // add health information of external services
+        }
+
+        // return application health information
+        return applicationHealth;
     }
 }

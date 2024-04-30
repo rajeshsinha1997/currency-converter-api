@@ -5,7 +5,8 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
-import com.demo.cca.dto.response.ResponseDTO;
+import com.demo.cca.dto.response.ErrorResponseDTO;
+import com.demo.cca.dto.response.SuccessResponseDTO;
 import com.demo.cca.interfaces.IResponseData;
 
 /**
@@ -39,8 +40,20 @@ public class CommonHelper {
      * @param responseData     The response data to include in the response DTO.
      * @return A response DTO containing the provided timestamp and response data.
      */
-    public static ResponseDTO buildResponse(String currentTimestamp, IResponseData responseData) {
-        return new ResponseDTO(currentTimestamp, responseData);
+    public static SuccessResponseDTO buildSuccessResponse(String currentTimestamp, IResponseData responseData) {
+        return new SuccessResponseDTO(currentTimestamp, responseData);
+    }
+
+    /**
+     * Builds an ErrorResponseDTO object with the specified error timestamp and
+     * error message.
+     *
+     * @param errorTimestamp The timestamp of the error.
+     * @param errorMessage   The error message.
+     * @return An ErrorResponseDTO object representing the error response.
+     */
+    public static ErrorResponseDTO buildErrorResponse(String errorTimestamp, String errorMessage) {
+        return new ErrorResponseDTO(errorTimestamp, errorMessage);
     }
 
     /**
