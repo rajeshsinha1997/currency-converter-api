@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+
+<configuration>
+    <import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder" />
+    <import class="ch.qos.logback.core.rolling.RollingFileAppender" />
+    <import class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy" />
+    <import class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP" />
+    <import class="ch.qos.logback.core.ConsoleAppender" />
+
+    <!-- variables -->
+    <variable name="LOG_FILE_DIR" value="logs" scope="local" />
+
+    <!-- file appender -->
+    <appender name="FILE" class="RollingFileAppender">
+        <rollingPolicy class="SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE_DIR}/cca_%d{yyyyMMdd}_%i.log</fileNamePattern>
+            <maxFileSize>500MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>5GB</totalSizeCap>
+            <timeBasedFileNamingAndTriggeringPolicy class="SizeAndTimeBasedFNATP">
+                <maxFileSize>1KB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} - [%thread] - [%-5level] - [%file] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- console appender -->
+    <appender name="STDOUT" class="ConsoleAppender">
+        <encoder class="PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss.SSS} - [%thread] - [%-5level] - [%file] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- setting the root logger -->
+    <root level="INFO">
+        <!-- add console appendar to the root logger -->
+        <appender-ref ref="STDOUT" />
+    </root>
+
+    <!-- setting the application logger -->
+    <logger name="com.demo.cca" level="DEBUG">
+        <!-- add file appendar to the root logger -->
+        <appender-ref ref="FILE" />
+    </logger>
+</configuration>

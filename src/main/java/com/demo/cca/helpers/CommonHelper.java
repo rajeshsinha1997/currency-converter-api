@@ -9,11 +9,14 @@ import com.demo.cca.dto.response.ErrorResponseDTO;
 import com.demo.cca.dto.response.SuccessResponseDTO;
 import com.demo.cca.interfaces.IResponseData;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Utility class providing common helper methods for various tasks.
  * This class contains static methods that can be used across the application
  * for common tasks.
  */
+@Slf4j
 public class CommonHelper {
     // private constructor to prevent instantiation
     private CommonHelper() {
@@ -41,6 +44,7 @@ public class CommonHelper {
      * @return A response DTO containing the provided timestamp and response data.
      */
     public static SuccessResponseDTO buildSuccessResponse(String currentTimestamp, IResponseData responseData) {
+        log.info("building success response with timestamp - " + currentTimestamp + ", data - " + responseData);
         return new SuccessResponseDTO(currentTimestamp, responseData);
     }
 
