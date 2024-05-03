@@ -4,23 +4,32 @@
 <configuration>
     <import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder" />
     <import class="ch.qos.logback.core.rolling.RollingFileAppender" />
-    <import class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy" />
-    <import class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP" />
+    <import class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy" />
     <import class="ch.qos.logback.core.ConsoleAppender" />
 
     <!-- variables -->
-    <variable name="LOG_FILE_DIR" value="logs" scope="local" />
+    <variable name="ACTIVE_LOG_FILE_DIR" value="logs" scope="local" />
+    <variable name="ARCHIVE_LOG_FILE_DIR" value="logs/archive" scope="local" />
 
     <!-- file appender -->
     <appender name="FILE" class="RollingFileAppender">
-        <rollingPolicy class="SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_FILE_DIR}/cca_%d{yyyyMMdd}_%i.log</fileNamePattern>
-            <maxFileSize>500MB</maxFileSize>
+        <!-- name of the active log file -->
+        <file>${ACTIVE_LOG_FILE_DIR}/cca.log</file>
+
+        <append>true</append>
+        <immediateFlush>true</immediateFlush>
+
+        <rollingPolicy class="TimeBasedRollingPolicy">
+            <fileNamePattern>${ARCHIVE_LOG_FILE_DIR}/cca_%d{yyyy_MM_dd}.zip</fileNamePattern>
+
+            <!-- maximum number of archive log files to keep -->
             <maxHistory>30</maxHistory>
-            <totalSizeCap>5GB</totalSizeCap>
-            <timeBasedFileNamingAndTriggeringPolicy class="SizeAndTimeBasedFNATP">
-                <maxFileSize>1KB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
+
+            <!-- maximum size allowed for storing all archived log files -->
+            <totalSizeCap>1GB</totalSizeCap>
+
+            <!-- remove archived log files on start up -->
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} - [%thread] - [%-5level] - [%file] - %msg%n</pattern>
