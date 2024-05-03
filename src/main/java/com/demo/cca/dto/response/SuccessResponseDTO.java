@@ -3,10 +3,13 @@ package com.demo.cca.dto.response;
 import com.demo.cca.interfaces.IResponseData;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.ToString;
+
 /**
  * Represents a generic response DTO (Data Transfer Object) containing response
  * data and timestamp.
  */
+@ToString
 public class SuccessResponseDTO {
 
     @JsonProperty("response-timestamp")

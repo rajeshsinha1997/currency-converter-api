@@ -6,10 +6,13 @@ import com.demo.cca.enums.ApplicationStatus;
 import com.demo.cca.interfaces.IResponseData;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.ToString;
+
 /**
  * Represents the response data structure for health information of an
  * application.
  */
+@ToString
 public class HealthResponseDTO implements IResponseData {
     // The name of the application
     @JsonProperty("application-name")

@@ -5,10 +5,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.demo.cca.helpers.EnvironmentHelper;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Main application class for the Currency Converter API (CCA).
  */
 @SpringBootApplication
+@Slf4j
 public class CcaApplication {
 	/**
 	 * Main method to start the Currency Converter API application.
@@ -17,9 +20,11 @@ public class CcaApplication {
 	 */
 	public static void main(String[] args) {
 		// load dotenv file
+		log.info("initializing dotenv file");
 		EnvironmentHelper.loadDotEnvFile();
 
 		// run the spring application
+		log.info("starting the spring application");
 		SpringApplication.run(CcaApplication.class, args);
 	}
 }

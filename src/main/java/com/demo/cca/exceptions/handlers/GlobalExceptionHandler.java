@@ -9,19 +9,24 @@ import com.demo.cca.dto.response.ErrorResponseDTO;
 import com.demo.cca.exceptions.InvalidRequestParameterException;
 import com.demo.cca.helpers.CommonHelper;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Global exception handler for handling exceptions thrown from REST
  * controllers.
  */
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
     /**
      * Global exception handler for handling unhandled exceptions.
      */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponseDTO defaultExceptionHandler() {
+    public ErrorResponseDTO defaultExceptionHandler(Exception exception) {
         // return error response
+        log.error("handling " + exception.getClass().getSimpleName() + " in default handler: "
+                + exception.getLocalizedMessage());
         return CommonHelper.buildErrorResponse(CommonHelper.getCurrentTimestamp(false), "some internal error occurred");
     }
 
@@ -35,6 +40,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public ErrorResponseDTO handleInvalidRequestParameterException(InvalidRequestParameterException exception) {
         // return error response
+        log.error("handling " + exception.getClass().getSimpleName() + " : " + exception.getLocalizedMessage());
         return CommonHelper.buildErrorResponse(CommonHelper.getCurrentTimestamp(false), exception.getMessage());
     }
 }

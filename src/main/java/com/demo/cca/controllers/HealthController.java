@@ -9,10 +9,13 @@ import com.demo.cca.exceptions.InvalidRequestParameterException;
 import com.demo.cca.helpers.CommonHelper;
 import com.demo.cca.services.HealthService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Controller class for handling health check requests.
  */
 @RestController
+@Slf4j
 public class HealthController {
     private HealthService healthService;
 
@@ -23,7 +26,9 @@ public class HealthController {
      *                      operations.
      */
     public HealthController(HealthService healthService) {
+        log.info("initializing health controller");
         this.healthService = healthService;
+        log.debug("initialized health controller");
     }
 
     /**
@@ -38,9 +43,15 @@ public class HealthController {
     @GetMapping("/api/health")
     public SuccessResponseDTO getApplicationHealth(
             @RequestParam(name = "dependency-health", required = false) String addExternalDependencyHealth) {
+        // log request
+        log.info("received [GET - /api/health] request with query parameter value [dependency-health]: "
+                + addExternalDependencyHealth);
+
         // validate request parameter
-        if (addExternalDependencyHealth.isBlank() || (!addExternalDependencyHealth.equalsIgnoreCase("true")
-                && !addExternalDependencyHealth.equalsIgnoreCase("false"))) {
+        log.info("validating query parameter value [dependency-health]: " + addExternalDependencyHealth);
+        if (addExternalDependencyHealth != null && (addExternalDependencyHealth.isBlank()
+                || (!addExternalDependencyHealth.equalsIgnoreCase("true")
+                        && !addExternalDependencyHealth.equalsIgnoreCase("false")))) {
             // throw exception
             throw new InvalidRequestParameterException(
                     "invalid value for request parameter [dependency-health]: "
@@ -48,7 +59,9 @@ public class HealthController {
         }
 
         // call service method to get the application health information and return
+        log.info("generating health check response of the application");
         return CommonHelper.buildSuccessResponse(CommonHelper.getCurrentTimestamp(false),
-                this.healthService.getApplicationHealthData(addExternalDependencyHealth.equalsIgnoreCase("true")));
+                this.healthService.getApplicationHealthData(addExternalDependencyHealth != null &&
+                        addExternalDependencyHealth.equalsIgnoreCase("true")));
     }
 }

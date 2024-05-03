@@ -30,6 +30,7 @@ public class CommonHelper {
      * @return The current timestamp formatted in ISO 8601 format.
      */
     public static String getCurrentTimestamp(boolean inUTC) {
+        log.info("retrieving current timestamp in " + (inUTC ? "UTC" : "LOCAL") + " timezone");
         return LocalDateTime.now(inUTC ? ZoneOffset.UTC
                 : ZoneId
                         .systemDefault())
@@ -44,7 +45,7 @@ public class CommonHelper {
      * @return A response DTO containing the provided timestamp and response data.
      */
     public static SuccessResponseDTO buildSuccessResponse(String currentTimestamp, IResponseData responseData) {
-        log.info("building success response with timestamp - " + currentTimestamp + ", data - " + responseData);
+        log.info("building success response with timestamp: " + currentTimestamp + ", data: " + responseData);
         return new SuccessResponseDTO(currentTimestamp, responseData);
     }
 
@@ -57,18 +58,20 @@ public class CommonHelper {
      * @return An ErrorResponseDTO object representing the error response.
      */
     public static ErrorResponseDTO buildErrorResponse(String errorTimestamp, String errorMessage) {
+        log.info("building error response with timestamp: " + errorTimestamp + ", message: " + errorMessage);
         return new ErrorResponseDTO(errorTimestamp, errorMessage);
     }
 
     /**
-     * Converts an environment variable name to a property name by replacing
+     * Converts an environment variable name to a property key by replacing
      * underscores (_) with periods (.).
      * 
      * @param environmentVariableName The name of the environment variable.
-     * @return The property name derived from the environment variable name.
+     * @return The property key derived from the environment variable name.
      */
-    public static String convertEnvironmentVariableNameToPropertyName(String environmentVariableName) {
+    public static String convertEnvironmentVariableNameToPropertyKey(String environmentVariableName) {
         // replace underscores with periods and return
+        log.debug("converting environment variable name to property key: " + environmentVariableName);
         return environmentVariableName.replace('_', '.').toLowerCase();
     }
 }

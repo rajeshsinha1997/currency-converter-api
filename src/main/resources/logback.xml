@@ -26,20 +26,24 @@
             <maxHistory>30</maxHistory>
 
             <!-- maximum size allowed for storing all archived log files -->
-            <totalSizeCap>1GB</totalSizeCap>
+            <totalSizeCap>30GB</totalSizeCap>
 
             <!-- remove archived log files on start up -->
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} - [%thread] - [%-5level] - [%file] - %msg%n</pattern>
+            <pattern>
+                [%d{HH:mm:ss.SSS}]-[%thread]-[%-5level]-[%file]-%msg%n
+            </pattern>
         </encoder>
     </appender>
 
     <!-- console appender -->
     <appender name="STDOUT" class="ConsoleAppender">
         <encoder class="PatternLayoutEncoder">
-            <pattern>%d{HH:mm:ss.SSS} - [%thread] - [%-5level] - [%file] - %msg%n</pattern>
+            <pattern>
+                [%d{HH:mm:ss.SSS}]-[%-20thread]-[%-5level]-[%-45file]-%msg%n
+            </pattern>
         </encoder>
     </appender>
 
@@ -50,7 +54,7 @@
     </root>
 
     <!-- setting the application logger -->
-    <logger name="com.demo.cca" level="DEBUG">
+    <logger name="com.demo.cca">
         <!-- add file appendar to the root logger -->
         <appender-ref ref="FILE" />
     </logger>

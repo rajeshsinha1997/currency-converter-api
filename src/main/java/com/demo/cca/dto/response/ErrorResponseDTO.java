@@ -2,9 +2,12 @@ package com.demo.cca.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.ToString;
+
 /**
  * Data Transfer Object (DTO) representing an error response.
  */
+@ToString
 public class ErrorResponseDTO {
 
     @JsonProperty("error-timestamp")
