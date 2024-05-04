@@ -3,6 +3,7 @@ package com.demo.cca.dto.response;
 import com.demo.cca.interfaces.IResponseData;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.Getter;
 import lombok.ToString;
 
 /**
@@ -13,9 +14,11 @@ import lombok.ToString;
 public class SuccessResponseDTO {
 
     @JsonProperty("response-timestamp")
+    @Getter
     private String responseTimestamp;
 
     @JsonProperty("response-data")
+    @Getter
     private IResponseData responseData;
 
     /**

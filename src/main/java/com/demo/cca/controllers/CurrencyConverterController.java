@@ -22,6 +22,6 @@ public class CurrencyConverterController {
      */
     @GetMapping("/api/currency/convert")
     public SuccessResponseDTO getMethodName() {
-        return CommonHelper.buildSuccessResponse(CommonHelper.getCurrentTimestamp(false), null);
+        return CommonHelper.buildSuccessResponse(CommonHelper.getCurrentTimestampInFormatISO(false), null);
     }
 }

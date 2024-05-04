@@ -60,7 +60,7 @@ public class HealthController {
 
         // call service method to get the application health information and return
         log.info("generating health check response of the application");
-        return CommonHelper.buildSuccessResponse(CommonHelper.getCurrentTimestamp(false),
+        return CommonHelper.buildSuccessResponse(CommonHelper.getCurrentTimestampInFormatISO(false),
                 this.healthService.getApplicationHealthData(addExternalDependencyHealth != null &&
                         addExternalDependencyHealth.equalsIgnoreCase("true")));
     }

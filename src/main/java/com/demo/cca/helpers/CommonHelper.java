@@ -29,11 +29,9 @@ public class CommonHelper {
      *              timezone.
      * @return The current timestamp formatted in ISO 8601 format.
      */
-    public static String getCurrentTimestamp(boolean inUTC) {
+    public static String getCurrentTimestampInFormatISO(boolean inUTC) {
         log.info("retrieving current timestamp in " + (inUTC ? "UTC" : "LOCAL") + " timezone");
-        return LocalDateTime.now(inUTC ? ZoneOffset.UTC
-                : ZoneId
-                        .systemDefault())
+        return LocalDateTime.now().atZone(inUTC ? ZoneOffset.UTC : ZoneId.systemDefault())
                 .format(DateTimeFormatter.ISO_DATE_TIME);
     }
 

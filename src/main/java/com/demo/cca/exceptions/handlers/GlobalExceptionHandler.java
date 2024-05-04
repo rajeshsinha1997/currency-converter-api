@@ -27,7 +27,8 @@ public class GlobalExceptionHandler {
         // return error response
         log.error("handling " + exception.getClass().getSimpleName() + " in default handler: "
                 + exception.getLocalizedMessage());
-        return CommonHelper.buildErrorResponse(CommonHelper.getCurrentTimestamp(false), "some internal error occurred");
+        return CommonHelper.buildErrorResponse(CommonHelper.getCurrentTimestampInFormatISO(false),
+                "some internal error occurred");
     }
 
     /**
@@ -41,6 +42,7 @@ public class GlobalExceptionHandler {
     public ErrorResponseDTO handleInvalidRequestParameterException(InvalidRequestParameterException exception) {
         // return error response
         log.error("handling " + exception.getClass().getSimpleName() + " : " + exception.getLocalizedMessage());
-        return CommonHelper.buildErrorResponse(CommonHelper.getCurrentTimestamp(false), exception.getMessage());
+        return CommonHelper.buildErrorResponse(CommonHelper.getCurrentTimestampInFormatISO(false),
+                exception.getMessage());
     }
 }

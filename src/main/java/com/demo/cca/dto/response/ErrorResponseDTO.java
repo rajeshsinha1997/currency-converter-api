@@ -2,6 +2,7 @@ package com.demo.cca.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.Getter;
 import lombok.ToString;
 
 /**
@@ -11,9 +12,11 @@ import lombok.ToString;
 public class ErrorResponseDTO {
 
     @JsonProperty("error-timestamp")
+    @Getter
     private String errorTimestamp;
 
     @JsonProperty("error-message")
+    @Getter
     private String errorMessage;
 
     /**
