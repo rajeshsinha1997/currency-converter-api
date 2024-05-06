@@ -1,0 +1,16 @@
+# spring application related values
+spring.application.name=
+spring.application.version=
+
+# spring actuator related values
+management.server.port=
+
+# spring devtools values
+spring.devtools.add-properties=
+
+# server related values
+server.port=
+
+# logger values
+logging.level.web=
+logging.level.com.demo.cca=
