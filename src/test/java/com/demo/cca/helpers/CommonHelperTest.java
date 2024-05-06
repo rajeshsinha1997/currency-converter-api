@@ -23,7 +23,7 @@ class CommonHelperTest {
 
     @Test
     void testGetCurrentTimestampInFormatISOInUTC() {
-        // mock call to LocalDateTime.now
+        // mock class LocalDateTime
         try (MockedStatic<LocalDateTime> mockedLocalDateTime = Mockito.mockStatic(LocalDateTime.class)) {
             // apply mock
             mockedLocalDateTime.when(LocalDateTime::now).thenReturn(mockDateTime);
@@ -37,6 +37,9 @@ class CommonHelperTest {
             // test
             assertNotNull(actualData);
             assertEquals(expectedData, actualData);
+
+            // verification
+            mockedLocalDateTime.verify(LocalDateTime::now);
         }
     }
 
@@ -59,6 +62,9 @@ class CommonHelperTest {
             // test
             assertNotNull(actualData);
             assertEquals(expectedData, actualData);
+
+            // verification
+            mockedLocalDateTime.verify(LocalDateTime::now);
         }
     }
 
