@@ -26,9 +26,7 @@ public class HealthController {
      *                      operations.
      */
     public HealthController(HealthService healthService) {
-        log.info("initializing health controller");
         this.healthService = healthService;
-        log.debug("initialized health controller");
     }
 
     /**

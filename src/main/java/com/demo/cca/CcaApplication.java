@@ -3,8 +3,6 @@ package com.demo.cca;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.demo.cca.helpers.EnvironmentHelper;
-
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -19,10 +17,6 @@ public class CcaApplication {
 	 * @param args Command-line arguments.
 	 */
 	public static void main(String[] args) {
-		// load dotenv file
-		log.info("initializing dotenv file");
-		EnvironmentHelper.loadDotEnvFile();
-
 		// run the spring application
 		log.info("starting the spring application");
 		SpringApplication.run(CcaApplication.class, args);

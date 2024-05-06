@@ -59,17 +59,4 @@ public class CommonHelper {
         log.info("building error response with timestamp: " + errorTimestamp + ", message: " + errorMessage);
         return new ErrorResponseDTO(errorTimestamp, errorMessage);
     }
-
-    /**
-     * Converts an environment variable name to a property key by replacing
-     * underscores (_) with periods (.).
-     * 
-     * @param environmentVariableName The name of the environment variable.
-     * @return The property key derived from the environment variable name.
-     */
-    public static String convertEnvironmentVariableNameToPropertyKey(String environmentVariableName) {
-        // replace underscores with periods and return
-        log.debug("converting environment variable name to property key: " + environmentVariableName);
-        return environmentVariableName.replace('_', '.').toLowerCase();
-    }
 }

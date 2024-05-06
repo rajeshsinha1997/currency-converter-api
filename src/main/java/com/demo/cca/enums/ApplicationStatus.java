@@ -1,8 +1,11 @@
 package com.demo.cca.enums;
 
+import lombok.Getter;
+
 /**
  * Enumeration representing the status of an application.
  */
+@Getter
 public enum ApplicationStatus {
     // application is up
     UP("up"),
@@ -19,15 +22,5 @@ public enum ApplicationStatus {
      */
     ApplicationStatus(String enumValue) {
         this.enumValue = enumValue;
-    }
-
-    /**
-     * Retrieves the value associated with the enum constant.
-     * 
-     * @return The value associated with the enum constant.
-     */
-    public String getEnumValue() {
-        // return the value associated with the enum
-        return this.enumValue;
     }
 }

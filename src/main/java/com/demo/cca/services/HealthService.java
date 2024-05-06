@@ -5,14 +5,13 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import com.demo.cca.dto.response.HealthResponseDTO;
 import com.demo.cca.enums.ApplicationStatus;
-import com.demo.cca.helpers.EnvironmentHelper;
-
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -23,17 +22,21 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class HealthService {
-    private Instant startTime;
+    @Value("${spring.application.name}")
+    private String applicationName;
+
+    @Value("${spring.application.version}")
+    private String applicationVersion;
 
     private final Clock clock;
+
+    private Instant startTime;
 
     /**
      * Constructor for the HealthService class.
      */
     public HealthService() {
-        log.info("initializing health service");
         this.clock = Clock.systemDefaultZone();
-        log.debug("initialized health service");
     }
 
     /**
@@ -89,23 +92,11 @@ public class HealthService {
      * @return A HealthResponseDTO containing the health status of the application.
      */
     public HealthResponseDTO getApplicationHealthData(boolean addExternalDependencyHealth) {
-        // retrieve application name
-        log.info("retrieving application name");
-        String applicationName = EnvironmentHelper
-                .resolveEnvironmentVariableOrPropertyValue("SPRING_APPLICATION_NAME");
-        log.debug("retrieved application name: " + applicationName);
-
-        // retrieve application version
-        log.info("retrieving application version");
-        String applicationVersion = EnvironmentHelper
-                .resolveEnvironmentVariableOrPropertyValue("SPRING_APPLICATION_VERSION");
-        log.debug("retrieved application version: " + applicationVersion);
-
         // create instance of HealthResponseDTO containing the application health status
         log.debug("generating application health check data");
         HealthResponseDTO applicationHealth = new HealthResponseDTO(
-                applicationName,
-                applicationVersion,
+                this.applicationName,
+                this.applicationVersion,
                 this.getApplicationUptime(),
                 ApplicationStatus.UP,
                 new ArrayList<>());

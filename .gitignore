@@ -60,3 +60,4 @@ mvnw
 mvnw.cmd
 .env
 logs
+application.properties

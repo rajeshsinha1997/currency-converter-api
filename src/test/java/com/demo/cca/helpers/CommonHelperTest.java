@@ -97,17 +97,4 @@ class CommonHelperTest {
         assertEquals(mockErrorMessage, actualData.getErrorMessage());
     }
 
-    @Test
-    void testConvertEnvironmentVariableNameToPropertyKey() {
-        // define expected property key
-        String expectedPropertyKey = "mock.property.key";
-
-        // get actual data from function under test
-        String actualData = CommonHelper.convertEnvironmentVariableNameToPropertyKey("MOCK_PROPERTY_KEY");
-
-        // test
-        assertNotNull(actualData);
-        assertEquals(expectedPropertyKey, actualData);
-    }
-
 }
