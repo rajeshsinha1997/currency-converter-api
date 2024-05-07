@@ -36,6 +36,7 @@ public class HealthService {
      * Constructor for the HealthService class.
      */
     public HealthService() {
+        log.debug("initializing health service: " + this.getClass().getSimpleName());
         this.clock = Clock.systemDefaultZone();
     }
 
@@ -47,7 +48,7 @@ public class HealthService {
     @EventListener(ApplicationReadyEvent.class)
     public void setStartTime() {
         // set the application start time
-        log.info("setting application start time");
+        log.debug("setting application start time");
         this.startTime = Instant.now(this.clock);
         log.debug("successfully set application start time: " + this.startTime);
     }

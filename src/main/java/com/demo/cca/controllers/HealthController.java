@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.demo.cca.dto.response.SuccessResponseDTO;
 import com.demo.cca.exceptions.InvalidRequestParameterException;
 import com.demo.cca.helpers.CommonHelper;
+import com.demo.cca.helpers.ValidationHelper;
 import com.demo.cca.services.HealthService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ public class HealthController {
      *                      operations.
      */
     public HealthController(HealthService healthService) {
+        log.debug("initializing health controller: " + this.getClass().getSimpleName());
         this.healthService = healthService;
     }
 
@@ -42,24 +44,20 @@ public class HealthController {
     public SuccessResponseDTO getApplicationHealth(
             @RequestParam(name = "dependency-health", required = false) String addExternalDependencyHealth) {
         // log request
-        log.info("received [GET - /api/health] request with query parameter value [dependency-health]: "
-                + addExternalDependencyHealth);
+        log.info("received [GET - /api/health] request with query parameter value [dependency-health: "
+                + addExternalDependencyHealth + "]");
 
         // validate request parameter
-        log.info("validating query parameter value [dependency-health]: " + addExternalDependencyHealth);
-        if (addExternalDependencyHealth != null && (addExternalDependencyHealth.isBlank()
-                || (!addExternalDependencyHealth.equalsIgnoreCase("true")
-                        && !addExternalDependencyHealth.equalsIgnoreCase("false")))) {
+        log.info("validating query parameter value [dependency-health: " + addExternalDependencyHealth + "]");
+        if (ValidationHelper.isAddExternalDependencyHealthQueryParameterValueInvalid(addExternalDependencyHealth)) {
             // throw exception
-            throw new InvalidRequestParameterException(
-                    "invalid value for request parameter [dependency-health]: "
-                            + addExternalDependencyHealth);
+            throw new InvalidRequestParameterException("invalid value for request parameter [dependency-health: "
+                    + addExternalDependencyHealth + "]");
         }
 
         // call service method to get the application health information and return
         log.info("generating health check response of the application");
         return CommonHelper.buildSuccessResponse(CommonHelper.getCurrentTimestampInFormatISO(false),
-                this.healthService.getApplicationHealthData(addExternalDependencyHealth != null &&
-                        addExternalDependencyHealth.equalsIgnoreCase("true")));
+                this.healthService.getApplicationHealthData(Boolean.parseBoolean(addExternalDependencyHealth)));
     }
 }
