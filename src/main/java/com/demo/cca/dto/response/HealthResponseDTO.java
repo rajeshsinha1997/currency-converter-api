@@ -6,6 +6,7 @@ import com.demo.cca.enums.ApplicationStatus;
 import com.demo.cca.interfaces.IResponseData;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.Getter;
 import lombok.ToString;
 
 /**
@@ -16,22 +17,27 @@ import lombok.ToString;
 public class HealthResponseDTO implements IResponseData {
     // The name of the application
     @JsonProperty("application-name")
+    @Getter
     private String applicationName;
 
     // The version of the application
     @JsonProperty("application-version")
+    @Getter
     private String applicationVersion;
 
     // The uptime of the application
     @JsonProperty("application-uptime")
+    @Getter
     private String applicationUptime;
 
     // The status of the application
     @JsonProperty("application-status")
+    @Getter
     private ApplicationStatus applicationStatus;
 
     // The health information of dependencies of the application
     @JsonProperty("dependency-health")
+    @Getter
     private List<HealthResponseDTO> dependencyHealths;
 
     /**

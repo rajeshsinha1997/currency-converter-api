@@ -4,6 +4,9 @@ package com.demo.cca.helpers;
  * Helper class responsible for performing all validation work.
  */
 public class ValidationHelper {
+    // private constructor to prevent instantiation
+    private ValidationHelper() {
+    }
 
     /**
      * Validates the query parameter for adding external dependency health.
