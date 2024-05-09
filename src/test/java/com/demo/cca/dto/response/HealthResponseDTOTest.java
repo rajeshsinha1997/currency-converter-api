@@ -1,6 +1,7 @@
 package com.demo.cca.dto.response;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -9,22 +10,25 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import com.demo.cca.enums.ApplicationStatus;
+import com.demo.cca.interfaces.IResponseData;
 
 public class HealthResponseDTOTest {
+    // define mock test data
+    private final String mockApplicationName = "TestApp";
+    private final String mockApplicationVersion = "1.0";
+    private final String mockApplicationUptime = "12 hours";
+    ApplicationStatus mockApplicationStatus = ApplicationStatus.UP;
+    List<HealthResponseDTO> mockDependencyHealths = new ArrayList<>();
+
     @Test
     public void testConstructorAndGetters() {
-        // define mock test data
-        String mockApplicationName = "TestApp";
-        String mockApplicationVersion = "1.0";
-        String mockApplicationUptime = "12 hours";
-        ApplicationStatus mockApplicationStatus = ApplicationStatus.UP;
-        List<HealthResponseDTO> mockDependencyHealths = new ArrayList<>();
-
         // create object of the class under test
         HealthResponseDTO testObject = new HealthResponseDTO(mockApplicationName, mockApplicationVersion,
                 mockApplicationUptime, mockApplicationStatus, mockDependencyHealths);
 
         // test
+        assertNotNull(testObject);
+        assertTrue(testObject instanceof IResponseData);
         assertEquals(mockApplicationName, testObject.getApplicationName());
         assertEquals(mockApplicationVersion, testObject.getApplicationVersion());
         assertEquals(mockApplicationUptime, testObject.getApplicationUptime());
@@ -34,14 +38,7 @@ public class HealthResponseDTOTest {
 
     @Test
     public void testToString() {
-        // define mock test data
-        String mockApplicationName = "TestApp";
-        String mockApplicationVersion = "1.0";
-        String mockApplicationUptime = "12 hours";
-        ApplicationStatus mockApplicationStatus = ApplicationStatus.UP;
-        List<HealthResponseDTO> mockDependencyHealths = new ArrayList<>();
-
-        // create string representation of the object of the class under test
+        // get string representation of the object of the class under test
         String testObjectStringRepresentation = new HealthResponseDTO(mockApplicationName, mockApplicationVersion,
                 mockApplicationUptime, mockApplicationStatus, mockDependencyHealths).toString();
 

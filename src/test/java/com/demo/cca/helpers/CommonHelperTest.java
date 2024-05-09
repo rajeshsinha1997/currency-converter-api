@@ -19,7 +19,7 @@ import com.demo.cca.interfaces.IResponseData;
 class CommonHelperTest {
 
     // define mock datetime in system timezone
-    private static final LocalDateTime mockDateTime = LocalDateTime.now();
+    private final LocalDateTime mockDateTime = LocalDateTime.now();
 
     @Test
     void testGetCurrentTimestampInFormatISOInUTC() {
@@ -35,7 +35,6 @@ class CommonHelperTest {
             String actualData = CommonHelper.getCurrentTimestampInFormatISO(true);
 
             // test
-            assertNotNull(actualData);
             assertEquals(expectedData, actualData);
 
             // verification
@@ -45,7 +44,6 @@ class CommonHelperTest {
 
     @Test
     void testGetCurrentTimestampInFormatISOInSystemTimeZone() {
-
         // mock call to LocalDateTime.now
         try (MockedStatic<LocalDateTime> mockedLocalDateTime = Mockito.mockStatic(LocalDateTime.class)) {
             // apply mock
@@ -60,7 +58,6 @@ class CommonHelperTest {
             String actualData = CommonHelper.getCurrentTimestampInFormatISO(false);
 
             // test
-            assertNotNull(actualData);
             assertEquals(expectedData, actualData);
 
             // verification
